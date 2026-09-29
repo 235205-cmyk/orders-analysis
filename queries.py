@@ -12,5 +12,9 @@ for r in cur.execute("""SELECT c.name, SUM(o.amount) AS total FROM customers c
     JOIN orders o ON c.customer_id = o.customer_id
     GROUP BY c.customer_id ORDER BY total DESC"""):
     print(r)
-
+print("\nCities with avg order > 5000:")
+for r in cur.execute("""SELECT c.city, AVG(o.amount) FROM customers c
+    JOIN orders o ON c.customer_id = o.customer_id
+    GROUP BY c.city HAVING AVG(o.amount) > 5000"""):
+    print(r)
 conn.close()
